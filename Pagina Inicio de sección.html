@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Aplicación Web para la creación de listas de inventario</title>
+    <style>
+        body 
+		{
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #000;
+        }
+		/*Se encarga de centralisar la información de la pagina y editar el tipo de letra.*/
+
+        .card 
+		{
+            background: #fff;
+            width: 350px;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+		/*Se encarga de darle el fromato de la carta donde van el usuario, contraseñá y botones.*/
+
+        h2 
+		{
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+		/*Se encarga del espacio que es ocupado.*/
+
+        input 
+		{
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #000;
+            background: #fff;
+            font-size: 15px;
+        }
+		/*Le da estilo a todos los inputs.*/
+
+        .btn-container 
+		{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+		/*Se encarga de organizar los botones.*/
+
+        button 
+		{
+            width: 48%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #000;
+            background: #000;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+		/*Le da el estilo que tienen los botones actualmente.*/
+
+        button:hover 
+		{
+            background: #333;
+        }
+		/*Se encarga de cambiar el color de los botones cuando le pasas por encima*/
+		
+    </style>
+</head>
+<body>
+
+
+    <div class="card">
+        <h2>Bienvenido</h2>
+        <input id="nom_usuario" type="text" placeholder="Usuario">
+		<!-- Campo donde el usuario escribe su nombre. -->
+        <input id="contraseña" type="password" placeholder="Contraseña">
+		<!-- Campo donde el usuario escribe su contraseña. -->
+
+        <div class="btn-container">
+            <button onclick="location.href='Pagina crear cuenta.html'">Crear Cuenta</button>
+            <button onclick="Iniciarsesion()">Iniciar Sesión</button>
+        </div>
+		<br>
+		<div class="btn-container">
+		<button onclick="location.href='Index.html'">Volver</button>
+		<button onclick="location.href='Pagina de recuperacion de cuenta.html'">Recuperar Cuenta</button>
+		</div>
+		
+    </div>
+
+    <script>
+        function Iniciarsesion() 
+        {
+            let usuario = document.getElementById("nom_usuario").value;
+			// Se encarga de buscar el nombre de usuario ingresado.
+            let clave = document.getElementById("contraseña").value;
+			// Se encarga de buscar la contraseña que fue ingresada.
+            let listaUsuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+			// Esta linea de codigo esta encargada de buscar y verificar el local storage para verificar 
+			// si existen los datos ingresados.
+            let creado = listaUsuarios.find(u => 
+                u.nom_usuario === usuario && u.contraseña === clave
+            );
+			// Esta linea esta encargada de verificar que lo ingresado si exista para darle acceso al usuario.
+            if (!creado) 
+			{
+                alert("Usuario o contraseña incorrectos");
+                return;
+            }
+			// Estructura if en caso de que la contraseña o el usuario ingresado no existan o no esten correctos.
+			localStorage.setItem("usuarioActivo", creado.id);
+			// Linera de codigo encargada de permitirle al usuario acceso a las demas paginas sin 
+			// nececidad de iniciar sección otra vez.
+            alert("Inicio de sesión exitoso");
+			// Mensaje que se muestra cuando el Inicio de sección es exitoso.
+            location.href = "Creacion de tabla.html";
+			// Se encarga de mandar al usuario a la pagina de creación de tablas una vez inicie sección exitosamente.
+        }
+		// Función encargada de verificar si el usuario ingreso sus datos correctos o si los ingreso 
+		// incorrectos y enviarlo a la pagina de creación de tablas.
+    </script>	
+</body>
+</html>
+ 

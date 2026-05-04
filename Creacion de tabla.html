@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Aplicación Web para la creación de listas de inventario</title>
+<meta charset="UTF-8">
+<meta type="description" name="Introducción">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* Estilo del dropdown */
+ul 
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+/*Le da estilo al ul.*/
+
+li 
+{
+  float: left;
+}
+/*Se encarga de que cada li este hacia la izquierda.*/
+
+li a, .dropbtn 
+{
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+/*Le da estilo al dropdown*/
+
+li a:hover, .dropdown:hover .dropbtn 
+{
+  background-color: gray;
+}
+/*Cambia el color de los botenes cuando el usuario pasa el mouese por encima de ellos*/
+
+li.dropdown 
+{
+  display: inline-block;
+}
+/*Hace que los elementos de dropdown se alinien horizontalmente.*/
+
+/* Contenedor del menú desplegable, oculto por defecto */
+.dropdown-content
+{
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+/*Este bloque se encarga de mantener ocultas las opciones del dropdown hasta que el usuario pase el mouse.*/
+
+.dropdown-content a 
+{
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+/*Le da estilo a las opciones del dropdown.*/
+
+.dropdown-content a:hover 
+{
+  background-color: gray;
+}
+/*Bloque encargado de que cada vez que se pase el mouse por una opción cambie a gris.*/
+
+.dropdown:hover .dropdown-content 
+{
+  display: block;
+}
+/*Se encarga de desplegar las opciones cuando el usuario pasa el mouse por encima.*/
+
+div.gallery
+{
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 300px;
+}
+/*Se encarga de darle bordes a las imágenes de haber alguna.*/
+
+div.gallery:hover 
+{
+  border: 1px solid #777;
+}
+/*Cambia el borde de la imagen cuando el usuario pasa el mouse por encima.*/
+
+div.gallery img 
+{
+  width: 100%;
+  height: auto;
+}
+/*Ajusta la imagen dentro del contenedor de galería*/
+
+div.desc 
+{
+  padding: 15px;
+  text-align: center;
+}
+/*Estilo del texto descriptivo debajo de cada imagen*/
+
+/* Estilo de la Tabla */
+body 
+{
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+input 
+{
+    margin: 5px;
+    padding: 8px;
+}
+
+table 
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td 
+{
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: center;
+}
+
+th 
+{
+    background: #ddd;
+}
+
+button 
+{
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+/*Este bloque completo conforma el estilo de la tabla, botones y letra.*/
+
+#listaTablas 
+{
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    width: 50%;
+    padding: 10px;
+}
+/*Este bloque le da el estilo de la lista de las tablas guardadas del usuario*/
+
+#listaTablas li 
+{
+    background: white;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+/*Este bloque le da estilo a cada fila que muestra el nombre de la tabla.*/
+
+#listaTablas li 
+{
+    float: none !important;
+    display: block;
+    width: 100%;
+}
+/*Este bloque se encarga de que ;la lista de tablas guardadas sea vertical*/
+
+#listaTablas li button 
+{
+    margin-left: 10px;
+}
+/*Este bloque controla el espacio entre botones.*/
+</style>
+</head>
+
+<body>
+
+<ul>
+  <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">&#9776;</a>
+    <div class="dropdown-content">
+      <a href="Pagina comentario.html" target="_blank">Comentar</a>
+      <a href="Uso de IA.html" target="_blank">Uso de IA</a>
+      <a href="Index.html" target="_blank">Volver</a>
+    </div>
+  </li>
+</ul>
+
+<h2>Crear tabla de inventario</h2>
+
+<input id="tituloTabla" type="text" placeholder="Título del inventario">
+<button onclick="crearNuevaTabla()">Nueva tabla</button>
+
+<h3>Añadir producto</h3>
+
+<input id="id" type="text" placeholder="ID">
+<!-- Campo donde el usuario escribe el id del producto. -->
+<input id="nombre" type="text" placeholder="Nombre del producto">
+<!-- Campo donde el usuario escribe el nombre del producto. -->
+<input id="cantidad" type="number" placeholder="Cantidad">
+<!-- Campo donde el usuario escribe la cantidad del producto. -->
+<input id="precio" type="number" placeholder="Precio">
+<!-- Campo donde el usuario escribe el precio del producto. -->
+<input id="proveedor" type="text" placeholder="Proveedor">
+<!-- Campo donde el usuario escribe el nombre del proveedor del producto. -->
+
+<button onclick="agregarFila()">Añadir fila</button>
+
+<table id="tablaInventario">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Proveedor</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<!--Tabla echa con el proposito de mostrar todos los datos que el usuario este ingresando antes de añadirlo a la tabla.-->
+
+<button onclick="guardarTabla()">Guardar tabla</button>
+
+<h3>Tablas guardadas</h3>
+<ul id="listaTablas"></ul>
+
+<script>
+let usuario = localStorage.getItem("usuarioActivo");
+// Se encarga de buscar el usuario y cargar todos los datos.
+if (!usuario) 
+{
+    alert("Debes iniciar sesión primero");
+    location.href = "Pagina Inicio de sección.html";
+}
+// If en caso de que el usuario que entre a esta sección no tenga una cuenta iniciada.
+function crearNuevaTabla() 
+{
+    document.getElementById("tituloTabla").value = "";
+    // Se encarga de borrar el nombre de la tabla ingresada.
+    document.getElementById("id").value = "";
+    // Se encarga de borrar el id ingresado.
+    document.getElementById("nombre").value = "";
+    // Se encarga de borrar el nombre del producto ingresado.
+    document.getElementById("cantidad").value = "";
+    // Se encarga de borrar la cantidad del producto ingresado.
+    document.getElementById("precio").value = "";
+    // Se encarga de borrar el precio del producto ingresado.
+    document.getElementById("proveedor").value = "";
+    // Se encarga de borrar el nombre del producto ingresado.
+    document.querySelector("#tablaInventario tbody").innerHTML = "";
+    // Se encarga de vaciar todos para crear una nueva tabla.
+}
+// Funcion que se encarga de crear una tabla nueva.
+function agregarFila() 
+{
+    let id = document.getElementById("id").value;
+    // Se encarga de guarda el id ingresado.
+    let nombre = document.getElementById("nombre").value;
+    // Se encarga de guardar el nombre ingresado.
+    let cantidad = document.getElementById("cantidad").value;
+    // Se encarga de guardar la cantidad ingresada.
+    let precio = document.getElementById("precio").value;
+    // Se encarga de guardar el precio ingresado.
+    let proveedor = document.getElementById("proveedor").value;
+    // Se encarga de guardar el proveedor ingresado.
+    if (!id || !nombre || !cantidad || !precio || !proveedor) 
+    {
+        alert("Completa todos los campos");
+        return;
+    }
+    // if en caso de que falte algun campo en la tabla.
+    let tabla = document.getElementById("tablaInventario").querySelector("tbody");
+    // Esta linea obtiene los elementos ingresados y los guarda en la tabla.
+    let fila = `
+        <tr>
+            <td>${id}</td>
+            <td>${nombre}</td>
+            <td>${cantidad}</td>
+            <td>${precio}</td>
+            <td>${proveedor}</td>
+            <td>
+                <button onclick="editarFila(this)">Editar</button>
+                <button onclick="eliminarFila(this)">Eliminar</button>
+            </td>
+        </tr>
+    `;
+    // Esta linea es el formato de cada fila.
+    tabla.innerHTML += fila;
+    // Ingresa la fila nueva en la tabla
+    document.getElementById("id").value = "";
+    document.getElementById("nombre").value = "";
+    document.getElementById("cantidad").value = "";
+    document.getElementById("precio").value = "";
+    document.getElementById("proveedor").value = "";
+    // Limpia los campos una vez son guardados.
+}
+// Funcion que se encarga de crear y guardar las filas.
+
+function eliminarFila(boton) 
+{
+    boton.parentNode.parentNode.remove();
+    // Boton que elimina la fila.
+}
+// Funcion encargada de borrar la fila.
+function editarFila(boton) 
+{
+    let fila = boton.parentNode.parentNode;
+    // Busca la fila que el usuario selecciono para que la pueda editar.
+    let celdas = fila.querySelectorAll("td");
+    // Busca la información ya ingresada en las celdas.
+    document.getElementById("id").value = celdas[0].innerText;
+    // Busca el Id para que el usuario pueda editar el Id por uno nuevo.
+    document.getElementById("nombre").value = celdas[1].innerText;
+    // Busca el nombre del producto para que el usuario pueda editar el nombre del producto por uno nuevo.
+    document.getElementById("cantidad").value = celdas[2].innerText;
+    // Busca la cantidad del producto para que el usuario pueda editarla por la nueva cantidad.
+    document.getElementById("precio").value = celdas[3].innerText;
+    // Busca el precio para que el usuario pueda editar el precio por el nuevo.
+    document.getElementById("proveedor").value = celdas[4].innerText;
+    // Busca el proveedor para que el usuario pueda editarlo por uno nuevo.
+    fila.remove();
+    // Esta linea vuelve añadir la fila actualizada eliminando a la anterior.
+}
+// Funcion echa para que el usuario pueda editar las filas.
+function guardarTabla() 
+{
+    let titulo = document.getElementById("tituloTabla").value;
+	// Guarda el titulo que el usuario ingreso.
+    if (!titulo) 
+    {
+        alert("Debes poner un título a la tabla");
+        return;
+    }
+	// If en caso de que el usuario no ingrese el titulo.
+    let filas = [];
+    // Linea que guarda las filas.
+    let tabla = document.querySelectorAll("#tablaInventario tbody tr");
+    // Muestra todas la filas que han sido creadas.
+    tabla.forEach(tr => 
+    {
+        let datos = tr.querySelectorAll("td");
+        // Obtiene todos los datos de las celdas por fila.
+        filas.push
+		({
+            id: datos[0].innerText,
+            nombre: datos[1].innerText,
+            cantidad: datos[2].innerText,
+            precio: datos[3].innerText,
+            proveedor: datos[4].innerText
+        });
+        // Se asegura de que las filas sean guardadas.
+    });
+	// Sirve par guardar toda la infromación ingresada en las tablas.
+    let inventarios = JSON.parse(localStorage.getItem("inventarios")) || {};
+    // Se encarga de buscar las tablas que han sido creadas.
+    if (!inventarios[usuario]) 
+    {
+        inventarios[usuario] = [];
+    }
+    // If en caso de que el usuario no tenga tablas guardadas mostra un espacio.
+    let indiceExistente = inventarios[usuario].findIndex(t => t.titulo === titulo);
+    // Se asegura de que no se repitan los nombres de las tablas.
+    if (indiceExistente !== -1) 
+    {
+        inventarios[usuario][indiceExistente] = { titulo, filas };
+        alert("Tabla actualizada correctamente");
+    } 
+	// If encargado de actualizar la tabla de ya existir.
+	else 
+    {
+        inventarios[usuario].push({ titulo, filas });
+        // Si no existe, la agrega como tabla nueva.
+        alert("Tabla guardada correctamente");
+    }
+	// Segundo if encargado de guardar la tabla de no haber una con ese nombre.
+    localStorage.setItem("inventarios", JSON.stringify(inventarios));
+    // Guarda todos los datos de cada tabla en el local storage.
+    cargarListaTablas();
+    // Actualiza la lista de tablas en pantalla.
+}
+// Funcion encargada de guardar tablas o actualizarlas de ya existir.
+function cargarListaTablas() 
+{
+    let inventarios = JSON.parse(localStorage.getItem("inventarios")) || {};
+	// Esta linea carga las tablas guardadas en el local storage.
+    let lista = document.getElementById("listaTablas");
+    lista.innerHTML = "";
+    // Esta linea se encarga de seleccionar las tablas guardadas y actualizarlas.
+    if (!inventarios[usuario] || inventarios[usuario].length === 0) 
+    {
+        lista.innerHTML = "<li>No hay tablas guardadas</li>";
+        return;
+    }
+	// If encargado de mostrar mensaje en caso de que el usuario no tenga tablas guardadas.
+    inventarios[usuario].forEach((tabla, index) => 
+    {
+        let item = document.createElement("li");
+
+        item.innerHTML = `
+            <strong>${tabla.titulo}</strong>
+            <button onclick="cargarTabla(${index})">Abrir</button>
+            <button onclick="renombrarTabla(${index})">Renombrar</button>
+            <button onclick="eliminarTabla(${index})">Eliminar</button>
+        `;
+
+        lista.appendChild(item);
+		// Muestra los botones de las opciones disponibles.
+    });
+	// Estructura que muestra las opciones que puedes escoger para verificar las tablas.
+}
+// Esta funcion se encarga de cargar la lista de tablas guardadas de tener alguna.
+function renombrarTabla(indice) 
+{
+    let inventarios = JSON.parse(localStorage.getItem("inventarios")) || {};
+	// Esta linea carga las tablas guardadas en el local storage.
+    let tabla = inventarios[usuario][indice];
+	// Esta linea se encarga de cargar las tablas con la información como la introdujo el usuario.
+    let nuevoNombre = prompt("Nuevo nombre para la tabla:", tabla.titulo);
+    // Muestra una ventana en la cual el usuario tiene la oportunidad de cambiarle el nombre a la tabla.
+    if (!nuevoNombre || nuevoNombre.trim() === "") 
+    {
+        alert("Nombre inválido");
+        return;
+    }
+	// If en caso de que el usuario deje el nombre en blanco.
+    let indiceExistente = inventarios[usuario].findIndex(t => t.titulo === nuevoNombre);
+	// Linea encargada de verificar que los nombres de las tablas no se repitan.
+    if (indiceExistente !== -1 && indiceExistente !== indice) 
+    {
+        inventarios[usuario][indiceExistente] = tabla;
+        inventarios[usuario].splice(indice, 1);
+    } 
+	// If en caso de que se repita un nombre se asegura de subtituirlo para que no se repitan las tablas.
+	else 
+	{
+        tabla.titulo = nuevoNombre;
+    }
+	// De no existir el nombre ingresado guarda la tabla con el nuevo nombre.
+    localStorage.setItem("inventarios", JSON.stringify(inventarios));
+	// Se asegura de actualizar el nombre de la tabla en el local storage.
+    cargarListaTablas();
+	// Actualiza la lista de las tablas para mostrar los nuevos cambios.
+    alert("Nombre actualizado correctamente");
+	// Muestra el mensaje cuando el cambio fue exitoso.
+}
+// Funcion con el proposito de que el usuario pueda renombrar el nombre de las tablas.
+function cargarTabla(indice) 
+{
+    let inventarios = JSON.parse(localStorage.getItem("inventarios")) || {};
+	// Se encarga de cargar todos los datos de la tabla.
+    let tablaSeleccionada = inventarios[usuario][indice];
+	// Esta linea se encarga la tabla que el usuario seleccione.
+    document.getElementById("tituloTabla").value = tablaSeleccionada.titulo;
+	// Linea de codigo que carga el titulo de la tabla.
+    let cuerpo = document.querySelector("#tablaInventario tbody");
+    cuerpo.innerHTML = "";
+	// Linea encargada de borrar datos anteriores para evitar mezclar datos.
+    tablaSeleccionada.filas.forEach(fila => 
+    {
+        let nuevaFila = `
+            <tr>
+                <td>${fila.id}</td>
+                <td>${fila.nombre}</td>
+                <td>${fila.cantidad}</td>
+                <td>${fila.precio}</td>
+                <td>${fila.proveedor}</td>
+                <td>
+                    <button onclick="editarFila(this)">Editar</button>
+                    <button onclick="eliminarFila(this)">Eliminar</button>
+                </td>
+            </tr>
+        `;
+        cuerpo.innerHTML += nuevaFila;
+		// Instrucción que carga las filas ya creadas a la tabla.
+    });
+	// Esta estructura se encarga de cargar los datos guardados de cada fila.
+
+    alert("Tabla cargada correctamente");
+	// Mensaje que se muestra cuando la tabla a sido cargada correctamente.
+}
+// Función encargada de cargar los datos de tablas ya creadas.
+function eliminarTabla(indice) 
+{
+    let inventarios = JSON.parse(localStorage.getItem("inventarios")) || {};
+	// Linea encargada de cargar todas las tablas con todos sus datos.
+    if (!confirm("¿Seguro que deseas eliminar esta tabla?")) return;
+	// If que se encarga de asegurar que el usuario este seguro de borrar su tabla.
+    inventarios[usuario].splice(indice, 1);
+    // Esta linea se encarga de borrar la tabla seleccionada junto con sus datos.
+    localStorage.setItem("inventarios", JSON.stringify(inventarios));
+    // Se encarga de guardar cualquier cambio echo enviandolo asi al local storage.
+    cargarListaTablas();
+	// Actualiza la lista para que los datos  que existan solo sean los que el usuario no borro.
+    alert("Tabla eliminada correctamente");
+	// Mensaje que se muestar luego de borrar una tabla correctamente.
+}
+// Función encargada de borrar tablas con todo su contenido.
+cargarListaTablas();
+// Linea que carga la lista de todas las tablas que el usuario haiga creado.
+</script>
+
+</body>
+</html>
+

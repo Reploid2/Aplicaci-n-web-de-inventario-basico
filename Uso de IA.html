@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Aplicación Web para la creación de listas de inventario</title>
+<meta charset="UTF-8">
+<meta type="description" name="Introducción">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+ul 
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+/*Le da estilo al ul.*/
+
+li 
+{
+  float: left;
+}
+/*Se encarga de que cada li este hacia la izquierda.*/
+
+li a, .dropbtn 
+{
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+/*Le da estilo al dropdown*/
+
+li a:hover, .dropdown:hover .dropbtn 
+{
+  background-color: gray;
+}
+/*Cambia el color de los botenes cuando el usuario pasa el mouese por encima de ellos*/
+
+li.dropdown 
+{
+  display: inline-block;
+}
+/*Hace que los elementos de dropdown se alinien horizontalmente.*/
+
+/* Contenedor del menú desplegable, oculto por defecto */
+.dropdown-content
+{
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+/*Este bloque se encarga de mantener ocultas las opciones del dropdown hasta que el usuario pase el mouse.*/
+
+.dropdown-content a 
+{
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+/*Le da estilo a las opciones del dropdown.*/
+
+.dropdown-content a:hover 
+{
+  background-color: gray;
+}
+/*Bloque encargado de que cada vez que se pase el mouse por una opción cambie a gris.*/
+
+.dropdown:hover .dropdown-content 
+{
+  display: block;
+}
+/*Se encarga de desplegar las opciones cuando el usuario pasa el mouse por encima.*/
+
+div.gallery
+{
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 300px;
+}
+/*Se encarga de darle bordes a las imágenes de haber alguna.*/
+
+div.gallery:hover 
+{
+  border: 1px solid #777;
+}
+/*Cambia el borde de la imagen cuando el usuario pasa el mouse por encima.*/
+
+div.gallery img 
+{
+  width: 100%;
+  height: auto;
+}
+/*Ajusta la imagen dentro del contenedor de galería*/
+
+div.desc 
+{
+  padding: 15px;
+  text-align: center;
+}
+/*Estilo del texto descriptivo debajo de cada imagen*/
+
+
+</style>
+</head>
+<body>
+
+<ul>
+  <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">&#9776;</a>
+    <div class="dropdown-content">
+      <a href="Pagina comentario.html" target="_blank">Comentar</a>
+	  <a href="Creacion de tabla.html" target="_blank">Crear Tablas</a>
+	  <a href="Pagina Inicio de sección.html" target="_blank">Iniciar sección</a>
+      <a href="index.html" target="_blank">Volver a la pagina principal</a>
+    </div>
+  </li>
+</ul>
+<center>
+    <h1>¿Cómo utilicé la IA en mi aplicación web?</h1>
+<p>La IA que se utilizó para asistirme en este proyecto fue Copilot. Esta IA se utilizó para 
+<p>ayudarme a hacer el código para crear cuentas en mi aplicación web. Por esta también fue que 
+<p>encontré que se podía guardar esta información en el local storage. El cual es utilizado para 
+<p>guardar las tablas por ID de usuario y las filas por tablas. Me ayudó a mejorar la base de datos 
+<p>inicial para guardarla de forma más eficaz y organizada. La cual me llevó a hacer el cambio de 
+<p>que cada usuario genere su propio ID automáticamente cada uno siendo distinto. Copilot 
+<p>también creó el diseño inicial de la página de iniciar sección de la cual me dejé llevar para 
+<p>realizar la página en donde el usuario crea una cuenta nueva. La página principal que es donde 
+<p>se realizan las tablas con el inventario, me ayudó a poder crearla para que funcione 
+<p>correctamente. Fue de asistencia en la creación de las funciones principales de esta parte ya 
+<p>que se necesitó utilizar java script para hacer que funcionara cómo se esperaba. Una vez se 
+<p>codificó todo, se le preguntó a Copilot que función tenía cada línea del código de java script y 
+<p>parte del código de CSS. Las cuales fueron explicadas una a una en mis propias palabras según
+<p> Copilot me explicaba en donde tenía dudas. Gracias a todo lo que fui preguntando según 
+<p>realizaba el proyecto, fui conociendo mejor cómo funcionaba java script. Lo cual me llamó la 
+<p>atención ya que encontré varias similitudes entre este lenguaje de programación y C++ lo cual 
+<p>me ayudó a entender varias partes del código. Me ayudó a descubrir un lenguaje nuevo el cual 
+<p>pienso aprender en el futuro ya que gracias a este proyecto pude ver lo que se puede hacer con 
+<p>java script. Por esta razón me dio curiosidad y decidí buscar alternativas a java script como 
+<p>Access o C++ los cuales tenía mayor conocimiento, pero terminé descubriendo que no sería
+<p>posible. Ya fuese por necesidad de un servidor o por otras complicaciones que según le
+<p> preguntaba a Copilot haría mi proyecto muy complicado a comparación de utilizar HTML, CSS y 
+<p>java script. Que fue la decisión correcta ya que conocía de HTML y un poco de CSS así que 
+<p>decidí usar estos dos y el lenguaje del cual conocía poco java script.
+<p>
+</center>
+
+
+
+</body>
+</html>
